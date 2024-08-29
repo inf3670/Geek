@@ -7,6 +7,14 @@ import {
 import {
   TimesIcon
 } from "./chunk-HNG4KRU5.js";
+import {
+  animate,
+  animation,
+  style,
+  transition,
+  trigger,
+  useAnimation
+} from "./chunk-EBYXCYBJ.js";
 import "./chunk-TWLOU2VE.js";
 import {
   DomHandler
@@ -18,14 +26,6 @@ import {
   UniqueComponentId,
   zindexutils
 } from "./chunk-ZFJCYA6L.js";
-import {
-  animate,
-  animation,
-  style,
-  transition,
-  trigger,
-  useAnimation
-} from "./chunk-EBYXCYBJ.js";
 import {
   CommonModule,
   DOCUMENT,

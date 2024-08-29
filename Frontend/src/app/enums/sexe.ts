@@ -1,6 +1,10 @@
+export const Sexe: { [key: string]: SexeOption } = {
+    FEMININ: { name: 'FEMININ', value: 'Féminin' },
+    MASCULIN: { name: 'MASCULIN', value: 'Masculin' }
+};
 
-export enum Sexe {
-    FEMININ = 'Féminin',
-    MASCULIN = 'Masculin'
+export interface SexeOption {
+    name: string;
+    value: string;
 }
-  
+

@@ -1,7 +1,12 @@
-export enum NiveauLangue {
-    A1 = 'A1',
-    A2 = 'A2',
-    B1 = 'B1',
-    B2 = 'B2',
-    C1 = 'C1'
-  }
+export const NiveauLangue: Record<string, NiveauLangueOption> = {
+  A1: { name: 'A1', value: 'Débutant' },
+  A2: { name: 'A2', value: 'Élémentaire' },
+  B1: { name: 'B1', value: 'Intermédiaire' },
+  B2: { name: 'B2', value: 'Intermédiaire supérieur' },
+  C1: { name: 'C1', value: 'Avancé' }
+};
+
+export interface NiveauLangueOption {
+  name: string;
+  value: string;
+}

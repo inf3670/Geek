@@ -17,6 +17,8 @@ import { InputOtpModule } from 'primeng/inputotp';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { DividerModule } from 'primeng/divider';
+import { DropdownModule } from 'primeng/dropdown';
+import { FloatLabelModule } from 'primeng/floatlabel';
 
 @NgModule({
   imports: [
@@ -25,7 +27,9 @@ import { DividerModule } from 'primeng/divider';
     CommonModule,
     DialogModule,
     DividerModule,
+    DropdownModule,
     DynamicDialogModule,
+    FloatLabelModule,
     FormsModule,
     InputSwitchModule,
     InputTextModule, 
@@ -46,7 +50,9 @@ import { DividerModule } from 'primeng/divider';
     CommonModule,
     DialogModule,
     DividerModule,
+    DropdownModule,
     DynamicDialogModule,
+    FloatLabelModule,
     FormsModule,
     InputSwitchModule,
     InputTextModule, 

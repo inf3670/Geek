@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { FormulaireComponent } from './layout/Formulaire/formulaire/formulaire.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { HeaderComponent } from './layout/header/header/header.component';
+import { FormulaireComponent } from './layout/formulaire/formulaire.component';
 
 @Component({
   selector: 'app-root',

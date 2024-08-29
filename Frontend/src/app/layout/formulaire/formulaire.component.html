@@ -1,0 +1,400 @@
+<div class="formulaire">
+    <div class="grid justify-content-center ">
+        <div class="col-12 md:col-6 font-semibold text-xl">
+            <p> sélectionner le formulaire à remplir</p>
+        </div>
+        <div class="col-12 md:col-6 typeformulaire">
+            <p-dropdown
+                [ngModel]="selectedValue"
+                (onChange)=" onTypeFormulaire($event)"
+                [options]="TypeFormulaire"
+                optionValue="value"
+                optionLabel="value"
+                [showClear]="true"
+                placeholder="choisir le type de formulaire"
+                autoWidth="false"
+                class="custom-dropdown"></p-dropdown>
+        </div>
+    </div>
+    <div *ngIf="blockFormulaire">
+        <h1 class="title">{{choixFormulaire | titleFormulaire }}</h1>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit($event)">
+            <fieldset *ngIf="infoPersoFieldsets" class="section">
+                <legend class="section-title">Informations Personnelles</legend>      
+                <div>
+                    <label class="required-asterisk">Votre Nom :
+                        <input pInputText formControlName="nom">
+                        <small geek-error-messages control="nom" class="p-error"></small>
+                    </label>
+                </div> 
+                <div>
+                    <label class="required-asterisk">Votre Prénom :
+                        <input pInputText formControlName="prenom">
+                        <small geek-error-messages control="prenom" class="p-error"></small>
+                    </label>
+                </div>
+                <div class="grid">
+                    <div class="col-12 md:col-6 pr-3">
+                        <label class="required-asterisk"> Date :
+                            <input type="date" formControlName="date" class="date-input">
+                            <small geek-error-messages control="date" class="p-error"></small>
+                        </label>
+                    </div>
+                    <div class="col-12 md:col-6 p-1"> 
+                        <label class="mb-2 required-asterisk" for="sexe"> Sexe: </label>
+                        <p-dropdown
+                            formControlName="sexe"
+                            [options]="Sexe"
+                            optionValue="value"
+                            optionLabel="value"
+                            [showClear]="true"
+                            autoWidth="false"
+                            class="custom-dropdown"></p-dropdown>   
+                        <small geek-error-messages control="sexe" class="p-error"></small>           
+                    </div>       
+                </div>
+                <div class="grid">
+                    <div class="col-12 md:col-6 pr-3">
+                        <label class="required-asterisk">Votre E-Mail :
+                            <input pInputText type="email" formControlName="email">
+                            <small geek-error-messages control="email" class="p-error"></small>
+                        </label>
+                    </div>
+                    <div class="col-12 md:col-6">
+                        <label class="required-asterisk">Votre numéro de téléphone :
+                            <input type="tel" formControlName="numero">
+                            <small geek-error-messages control="numero" class="p-error"></small>
+                        </label>
+                    </div>       
+                </div>
+                <div class="grid">
+                    <div class="col-12 md:col-6 pr-3 p-1" >
+                            <label class="mb-2 required-asterisk" for="pays"> Votre pays de résidence actuel: </label>
+                            <p-dropdown
+                                formControlName="pays"
+                                [options]="Pays"
+                                optionValue="value"
+                                optionLabel="value"
+                                [showClear]="true"
+                                autoWidth="false"
+                                class="custom-dropdown"></p-dropdown>  
+                            <small geek-error-messages control="pays" class="p-error"></small>
+                    </div>
+                    <div class="col-12 md:col-6 p-2">
+                        <label class="required-asterisk">Ville et quartier de résidence actuelle :
+                            <input type="text" formControlName="adresse">
+                            <small geek-error-messages control="adresse" class="p-error"></small>
+                        </label>
+                    </div>       
+                </div>
+            </fieldset>
+            <fieldset *ngIf="niveauLangueFieldsets" class="section">
+                <legend class="section-title">Niveau de Langue</legend>
+                <div class="grid">
+                    <div class="col-12 md:col-6 pr-3">
+                        <label class="mb-2 required-asterisk" for="raisonInscription"> Pourquoi voulez-vous faire les cours d'allemand ?</label>
+                        <p-dropdown
+                            formControlName="raisonInscription"
+                            [options]="RaisonInscription"
+                            optionValue="value"
+                            optionLabel="value"
+                            [showClear]="true"
+                            autoWidth="false"
+                            class="custom-dropdown"></p-dropdown>  
+                        <small geek-error-messages control="raisonInscription" class="p-error"></small>
+                    </div>
+                    <div class="col-12 md:col-6 p-2">
+                        <label class="required-asterisk">Date de début de cours souhaitée:
+                            <input type="date" formControlName="dateDebutCours" class="full-width date-input">
+                            <small geek-error-messages control="dateDebutCours" class="p-error"></small>
+                        </label>
+                    </div>       
+                </div>   
+                <div class="grid">
+                    <div class="col-12 md:col-6 pr-3">
+                        <label class="mb-2 required-asterisk" for="niveauLangueActuel"> Votre niveau de langue actuel:</label>
+                        <p-dropdown
+                            formControlName="niveauLangueActuel"
+                            [options]="NiveauLangue"
+                            optionValue="value"
+                            optionLabel="value"
+                            [showClear]="true"
+                            autoWidth="false"
+                            class="custom-dropdown"></p-dropdown> 
+                        <small geek-error-messages control="niveauLangueActuel" class="p-error"></small>
+                    </div>
+                    <div class="col-12 md:col-6 p-2">
+                        <label class="mb-2 required-asterisk" for="niveauLangueInscription"> Votre niveaNiveau où vous souhaitez vous inscrire:</label>
+                        <p-dropdown
+                            formControlName="niveauLangueInscription"
+                            [options]="NiveauLangue"
+                            optionValue="value"
+                            optionLabel="value"
+                            [showClear]="true"
+                            autoWidth="false"
+                            class="custom-dropdown"></p-dropdown> 
+                        <small geek-error-messages control="niveauLangueInscription" class="p-error"></small>
+                    </div> 
+                </div>
+            </fieldset>  
+            <fieldset *ngIf="competenceInfoFieldsets" class="section">
+                <legend class="section-title">Compétences Informatiques</legend>
+                <div class="grid">
+                    <div class="col-12 md:col-6 pr-3" >
+                        <label class="mb-2 required-asterisk" for="niveauInformatique"> Votre niveau actuel en informatique:</label>
+                        <p-dropdown
+                            formControlName="niveauInformatique"
+                            [options]="NiveauInformatique"
+                            optionValue="value"
+                            optionLabel="value"
+                            [showClear]="true"
+                            autoWidth="false"
+                            class="custom-dropdown"></p-dropdown> 
+                        <small geek-error-messages control="niveauInformatique" class="p-error"></small>
+                    </div>
+                    <div class="col-12 md:col-6 p-2">
+                        <label class="required-asterisk">Date de début de cours souhaitée :
+                            <input type="date" formControlName="dateDebutCoursInfo" class="full-width date-input">
+                            <small geek-error-messages control="dateDebutCoursInfo" class="p-error"></small>
+                        </label>
+                    </div>       
+                </div> 
+                <div>
+                    <label>Dans quel domaine informatique souhaitez-vous vous perfectionner ? :
+                        <textarea class="textarea" formControlName="domaineInfoSouhaiter"></textarea>
+                    </label>
+                </div>
+            </fieldset> 
+            <fieldset *ngIf="niveauEtudeFieldsets" class="section">
+                <legend class="section-title">Niveau d'Étude et Formation</legend>
+                <div class="grid">
+                    <div class="col-12 md:col-6 pr-3 p-1" >
+                        <label class="mb-2 required-asterisk" for="niveauEtude"> Niveau d'étude:</label>
+                        <p-dropdown
+                            formControlName="niveauEtude"
+                            [options]="NiveauEtude"
+                            optionValue="value"
+                            optionLabel="value"
+                            [showClear]="true"
+                            autoWidth="false"
+                            class="custom-dropdown"></p-dropdown> 
+                        <small geek-error-messages control="niveauEtude" class="p-error"></small>
+                    </div>
+                    <div class="col-12 md:col-6 p-2">
+                        <label class="required-asterisk">Année d'obtention du diplôme le plus élevé : :
+                            <input type="date" formControlName="dateHautDiplom" class="full-width date-input">
+                            <small geek-error-messages control="dateHautDiplom" class="p-error"></small>
+                        </label>
+                    </div>      
+                </div>
+                <div>
+                    <label class="required-asterisk">Spécialité :
+                        <input type="text" formControlName="specialite">
+                        <small geek-error-messages control="specialite" class="p-error"></small>
+                    </label>
+                </div>
+            </fieldset>
+            <fieldset *ngIf="infoSuplFieldsets" class="section">
+                <legend class="section-title">Informations Supplémentaires</legend>
+                <div>
+                    <label>Numéro de téléphone et nom de la personne ayant recommandé nos services :
+                        <input type="text" formControlName="infoRecommandataire">
+                    </label>
+                </div>
+                <div>
+                    <label>Avez-vous un message à ajouter :
+                        <textarea class="textarea" formControlName="messageSupplementaire"></textarea>
+                    </label>
+                </div>
+            </fieldset>
+            <button type="submit">Submit</button>
+        </form>
+    </div> 
+</div>
+
+<div *ngIf="tableauPresence1" class="card">
+    <div class="flex justify-content-end mr-7">
+        <p-button type="button" label="Add" icon="pi pi-plus" (click)="addRow()"></p-button>
+    </div>
+    <p-table 
+        #myTable
+        [value]="listeDePresence" 
+        dataKey="id"
+        editMode="row" 
+        [tableStyle]="{'min-width': '130rem'}"
+        [scrollable]="true">
+        <ng-template pTemplate="header">
+            <tr class="formulaireTitle">
+                <th>Date</th>
+                <th>Genre</th> 
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Email</th> 
+                <th>Telephone</th>
+                <th>HeuereArivee</th>
+                <th>HeuereDepart</th>
+                <th>Motif</th>
+                <th alignFrozen="right" pFrozenColumn></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-presence let-editing="editing" let-ri="rowIndex" >
+            <tr [pEditableRow]="presence">
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input 
+                                pInputText type="date"
+                                [(ngModel)]="presence.date" />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{presence.date}}
+                        </ng-template>
+                    </p-cellEditor> 
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-dropdown
+                            [options]="Sexe"
+                            optionValue="value"
+                            optionLabel="value"
+                            [showClear]="true"
+                            autoWidth="false"
+                            [(ngModel)]="presence.genre"
+                            class="custom-dropdown"></p-dropdown>                       
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{presence.genre}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input 
+                                pInputText type="text" 
+                                [(ngModel)]="presence.nom" />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{presence.nom}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input 
+                                pInputText type="text" 
+                                [(ngModel)]="presence.prenom" />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{presence.prenom}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input 
+                                pInputText type="text" 
+                                [(ngModel)]="presence.email" />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{presence.email}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input 
+                                pInputText type="text" 
+                                [(ngModel)]="presence.telephone" />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{presence.telephone}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input 
+                                pInputText type="text" 
+                                [(ngModel)]="presence.heureArivee" />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{presence.heureArivee}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input 
+                                pInputText type="text" 
+                                [(ngModel)]="presence.heureDepart" />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{presence.heureDepart}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input 
+                                pInputText type="text" 
+                                [(ngModel)]="presence.motif" />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{presence.motif}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td alignFrozen="right" pFrozenColumn>
+                    <div class="flex align-items-center justify-content-center gap-2">
+                        <button 
+                            *ngIf="!editing" 
+                            pButton 
+                            pRipple 
+                            type="button" 
+                            pInitEditableRow 
+                            icon="pi pi-pencil" 
+                            (click)="onRowEditInit(presence)" 
+                            class="buttonEditRow p-button-rounded p-button-text">
+                        </button>
+                        <button 
+                            *ngIf="!editing"
+                            pButton 
+                            pRipple 
+                            type="button" 
+                            icon="pi pi-trash" 
+                            (click)="deleteOnePresence(ri, presence.id )" 
+                            class="buttonDeleteRow p-button-rounded p-button-text p-button-danger">
+                        </button>
+                        <button 
+                            *ngIf="editing" 
+                            pButton 
+                            pRipple 
+                            type="button" 
+                            pSaveEditableRow 
+                            icon="pi pi-check" 
+                            (click)="onRowEditSave(presence)" 
+                            class="p-button-rounded p-button-text p-button-success mr-2">
+                        </button>
+                        <button 
+                            *ngIf="editing" 
+                            pButton pRipple 
+                            type="button" 
+                            pCancelEditableRow 
+                            icon="pi pi-times" 
+                            (click)="onRowEditCancel(presence, ri)" 
+                            class="p-button-rounded p-button-text p-button-danger">
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
