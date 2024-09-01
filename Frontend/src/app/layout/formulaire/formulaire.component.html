@@ -17,7 +17,7 @@
         </div>
     </div>
     <div *ngIf="blockFormulaire">
-        <h1 class="title">{{choixFormulaire | titleFormulaire }}</h1>
+        <h1 class="title">{{selectedValue | titleFormulaire }}</h1>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit($event)">
             <fieldset *ngIf="infoPersoFieldsets" class="section">
                 <legend class="section-title">Informations Personnelles</legend>      
@@ -36,7 +36,7 @@
                 <div class="grid">
                     <div class="col-12 md:col-6 pr-3">
                         <label class="required-asterisk"> Date :
-                            <input type="date" formControlName="date" class="date-input">
+                            <input type="date" formControlName="date" class="date-input" >
                             <small geek-error-messages control="date" class="p-error"></small>
                         </label>
                     </div>
@@ -162,6 +162,7 @@
                 <div>
                     <label>Dans quel domaine informatique souhaitez-vous vous perfectionner ? :
                         <textarea class="textarea" formControlName="domaineInfoSouhaiter"></textarea>
+                        <small control="domaineInfoSouhaiter"></small>
                     </label>
                 </div>
             </fieldset> 
@@ -199,20 +200,27 @@
                 <div>
                     <label>Numéro de téléphone et nom de la personne ayant recommandé nos services :
                         <input type="text" formControlName="infoRecommandataire">
+                        <small control="infoRecommandataire"></small>
                     </label>
                 </div>
                 <div>
                     <label>Avez-vous un message à ajouter :
                         <textarea class="textarea" formControlName="messageSupplementaire"></textarea>
+                        <small control="messageSupplementaire"></small>
                     </label>
                 </div>
             </fieldset>
-            <button type="submit">Submit</button>
+            <button type="submit" *ngIf="!isSubmitted">Submit</button>
+            <div class="flex justify-content-around flex-wrap" *ngIf="isSubmitted">
+                <p-button type="button" severity="danger" (click)="cancel()">Annuler</p-button>
+                <p-button type="button" (click)="onEdit()">Edit</p-button>
+                <p-button type="button" (click)="onSave()">Enregistrer</p-button>
+            </div>
         </form>
     </div> 
 </div>
 
-<div *ngIf="tableauPresence1" class="card">
+<div *ngIf="tableauPresence" class="card">
     <div class="flex justify-content-end mr-7">
         <p-button type="button" label="Add" icon="pi pi-plus" (click)="addRow()"></p-button>
     </div>

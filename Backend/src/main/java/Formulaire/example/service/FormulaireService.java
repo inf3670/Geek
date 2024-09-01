@@ -1,11 +1,8 @@
 package Formulaire.example.service;
 
-import Formulaire.example.dto.EtudiantRequest;
-import Formulaire.example.dto.EtudiantResponse;
 import Formulaire.example.dto.FormulaireRequest;
 import Formulaire.example.dto.FormulaireResponse;
 import Formulaire.example.entity.Formulaire;
-import Formulaire.example.repository.EtudiantRepository;
 import Formulaire.example.repository.FormulaireRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,19 +14,20 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class FormulaireService {
     private final FormulaireRepository formulaireRepository;
-    public List <FormulaireResponse>getAllEtudiants(){
+    public List <FormulaireResponse>getAllFormulaire(){
         return formulaireRepository.findAll()
                 .stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }
 
-    public FormulaireResponse saveEtudiant(FormulaireRequest formulaireRequest) {
+    public FormulaireResponse saveFormulaire(FormulaireRequest formulaireRequest) {
         return mapToResponse(formulaireRepository.save(mapToEntity(formulaireRequest)));
     }
 
     private Formulaire mapToEntity(FormulaireRequest formulaireRequest) {
         Formulaire formulaire = Formulaire.builder()
+                .typeFormulaire(formulaireRequest.getTypeFormulaire())
                 .date(formulaireRequest.getDate())
                 .sexe(formulaireRequest.getSexe())
                 .nom(formulaireRequest.getNom())
@@ -40,6 +38,9 @@ public class FormulaireService {
                 .adresse(formulaireRequest.getAdresse())
                 .niveauLangueActuel(formulaireRequest.getNiveauLangueActuel())
                 .niveauLangueInscription(formulaireRequest.getNiveauLangueInscription())
+                .niveauInformatique(formulaireRequest.getNiveauInformatique())
+                .dateDebutCoursInfo(formulaireRequest.getDateDebutCoursInfo())
+                .domaineInfoSouhaiter(formulaireRequest.getDomaineInfoSouhaiter())
                 .niveauEtude(formulaireRequest.getNiveauEtude())
                 .specialite(formulaireRequest.getSpecialite())
                 .dateHautDiplom(formulaireRequest.getDateHautDiplom())
@@ -55,6 +56,7 @@ public class FormulaireService {
     private FormulaireResponse mapToResponse(Formulaire formulaire) {
         FormulaireResponse formulaireResponse =FormulaireResponse.builder()
                 .id(formulaire.getId())
+                .typeFormulaire(formulaire.getTypeFormulaire())
                 .date(formulaire.getDate())
                 .sexe(formulaire.getSexe())
                 .nom(formulaire.getNom())
@@ -65,6 +67,9 @@ public class FormulaireService {
                 .adresse(formulaire.getAdresse())
                 .niveauLangueActuel(formulaire.getNiveauLangueActuel())
                 .niveauLangueInscription(formulaire.getNiveauLangueInscription())
+                .niveauInformatique(formulaire.getNiveauInformatique())
+                .dateDebutCoursInfo(formulaire.getDateDebutCoursInfo())
+                .domaineInfoSouhaiter(formulaire.getDomaineInfoSouhaiter())
                 .niveauEtude(formulaire.getNiveauEtude())
                 .specialite(formulaire.getSpecialite())
                 .dateHautDiplom(formulaire.getDateHautDiplom())

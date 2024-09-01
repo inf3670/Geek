@@ -1,9 +1,9 @@
 export const NiveauLangue: Record<string, NiveauLangueOption> = {
-  A1: { name: 'A1', value: 'Débutant' },
-  A2: { name: 'A2', value: 'Élémentaire' },
-  B1: { name: 'B1', value: 'Intermédiaire' },
-  B2: { name: 'B2', value: 'Intermédiaire supérieur' },
-  C1: { name: 'C1', value: 'Avancé' }
+  A1: { name: 'Débutant', value: 'A1' },
+  A2: { name: 'Élémentaire', value: 'A2' },
+  B1: { name: 'Intermédiaire', value: 'B1' },
+  B2: { name: 'Intermédiaire supérieur', value: 'B2' },
+  C1: { name: 'Avancé', value: 'C1' }
 };
 
 export interface NiveauLangueOption {

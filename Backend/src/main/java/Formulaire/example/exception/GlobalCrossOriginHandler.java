@@ -7,7 +7,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
-
 public class GlobalCrossOriginHandler implements WebMvcConfigurer {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

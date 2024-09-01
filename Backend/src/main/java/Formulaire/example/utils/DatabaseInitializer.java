@@ -1,12 +1,10 @@
 package Formulaire.example.utils;
 
-import Formulaire.example.dto.EtudiantRequest;
-import Formulaire.example.dto.EtudiantResponse;
+import Formulaire.example.dto.FormulaireRequest;
+import Formulaire.example.dto.FormulaireResponse;
 import Formulaire.example.dto.ListePresenceRequest;
 import Formulaire.example.dto.ListePresenceResponse;
-import Formulaire.example.enums.NiveauEtude;
-import Formulaire.example.enums.NiveauLangue;
-import Formulaire.example.enums.Sexe;
+import Formulaire.example.enums.*;
 import Formulaire.example.service.FormulaireService;
 import Formulaire.example.service.ListePresenceService;
 import lombok.RequiredArgsConstructor;
@@ -16,17 +14,18 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class DatabaseInitializer implements CommandLineRunner {
-   public final FormulaireService etudiantService;
+   public final FormulaireService formulaireService;
    public final ListePresenceService listePresenceService;
 
     @Override
     public void run(String... args) throws Exception {
-        createEtudiant();
+        createFormulaire();
         createListePresence();
     }
 
-    private void createEtudiant() {
-        EtudiantResponse lucas = etudiantService.saveEtudiant(EtudiantRequest.builder()
+    private void createFormulaire() {
+        FormulaireResponse lucas = formulaireService.saveFormulaire(FormulaireRequest.builder()
+                .typeFormulaire(TypeFormulaire.coursAnglais)
                 .date("10.02.2024")
                 .sexe(Sexe.Masculin)
                 .nom("Kengne")
@@ -37,6 +36,9 @@ public class DatabaseInitializer implements CommandLineRunner {
                 .adresse("Lan 2, rue 1")
                 .niveauLangueActuel(NiveauLangue.A1)
                 .niveauLangueInscription(NiveauLangue.A2)
+                .niveauInformatique(NiveauInformatique.Intermediaire)
+                .dateDebutCoursInfo("23.02.2024")
+                .domaineInfoSouhaiter("Softwareentwicklung")
                 .niveauEtude(NiveauEtude.BTS)
                 .specialite("Informatik")
                 .dateHautDiplom("12.02.2000")
@@ -46,7 +48,8 @@ public class DatabaseInitializer implements CommandLineRunner {
                 .messageSupplementaire("non")
                 .build());
 
-        EtudiantResponse Lilian = etudiantService.saveEtudiant(EtudiantRequest.builder()
+        FormulaireResponse Lilian = formulaireService.saveFormulaire(FormulaireRequest.builder()
+                .typeFormulaire(TypeFormulaire.coursAnglais)
                 .date("18.03.2020")
                 .sexe(Sexe.Féminin)
                 .nom("donfack")
@@ -57,6 +60,9 @@ public class DatabaseInitializer implements CommandLineRunner {
                 .adresse("biemassi 2, rue 6")
                 .niveauLangueActuel(NiveauLangue.B1)
                 .niveauLangueInscription(NiveauLangue.B2)
+                .niveauInformatique(NiveauInformatique.Debutant)
+                .dateDebutCoursInfo("23.02.2024")
+                .domaineInfoSouhaiter("Softwareentwicklung")
                 .niveauEtude(NiveauEtude.BEPC)
                 .specialite("Medecine")
                 .dateHautDiplom("23.02.2003")
@@ -66,7 +72,8 @@ public class DatabaseInitializer implements CommandLineRunner {
                 .messageSupplementaire("je suis contente de pouvoir etudier ici")
                 .build());
 
-        EtudiantResponse milen = etudiantService.saveEtudiant(EtudiantRequest.builder()
+        FormulaireResponse milen = formulaireService.saveFormulaire(FormulaireRequest.builder()
+                .typeFormulaire(TypeFormulaire.assistanceVisaAllemagne)
                 .date("30.08.2023")
                 .sexe(Sexe.Féminin)
                 .nom("Tonfack")
@@ -77,6 +84,9 @@ public class DatabaseInitializer implements CommandLineRunner {
                 .adresse("karrieri 6, rue 6")
                 .niveauLangueActuel(NiveauLangue.A1)
                 .niveauLangueInscription(NiveauLangue.B1)
+                .niveauInformatique(NiveauInformatique.Debutant)
+                .dateDebutCoursInfo("23.02.2024")
+                .domaineInfoSouhaiter("Softwareentwicklung")
                 .niveauEtude(NiveauEtude.Baccalauréat)
                 .specialite("Pflege")
                 .dateHautDiplom("23.12.2006")

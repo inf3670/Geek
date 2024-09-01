@@ -8,14 +8,14 @@ import { FormulaireRequest } from '../model/formulaire-request';
   providedIn: 'root'
 })
 export class FormulaireService {
-  private readonly apiUrl: string = "http://localhost:8080/etudiant";
+  private readonly apiUrl: string = "http://localhost:8080/formulaire";
   constructor(private http: HttpClient) { }
 
-  public getAllEtudiant(): Observable<FormulaireResponse[]> {
+  public getAllFormulaire(): Observable<FormulaireResponse[]> {
     return this.http.get<FormulaireResponse[]>(`${this.apiUrl}`);
   }
 
-  public createEtudiant(etudiant: FormulaireRequest): Observable<FormulaireRequest>{
-    return this.http.post<FormulaireRequest>(`${this.apiUrl}`, etudiant);
+  public createFormulaire(formulaire: FormulaireRequest): Observable<FormulaireRequest>{
+    return this.http.post<FormulaireRequest>(`${this.apiUrl}`, formulaire);
   }
 }

@@ -1,15 +1,7 @@
 package Formulaire.example.dto;
 
-import Formulaire.example.enums.NiveauEtude;
-import Formulaire.example.enums.NiveauLangue;
-import Formulaire.example.enums.Sexe;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import Formulaire.example.enums.*;
 import lombok.*;
-
-import java.time.LocalDate;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -18,6 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class FormulaireResponse {
     private Long id;
+    private TypeFormulaire typeFormulaire;
     private String date;
     private Sexe sexe;
     private String nom;
@@ -28,6 +21,9 @@ public class FormulaireResponse {
     private String adresse;
     private NiveauLangue niveauLangueActuel;
     private NiveauLangue niveauLangueInscription;
+    private NiveauInformatique niveauInformatique;
+    private String dateDebutCoursInfo;
+    private String domaineInfoSouhaiter;
     private NiveauEtude niveauEtude;
     private String specialite;
     private String dateHautDiplom;

@@ -1,11 +1,8 @@
 package Formulaire.example.entity;
 
-import Formulaire.example.enums.NiveauEtude;
-import Formulaire.example.enums.NiveauLangue;
-import Formulaire.example.enums.Sexe;
+import Formulaire.example.enums.*;
 import jakarta.persistence.*;
 import lombok.*;
-
 
 @Getter
 @Setter
@@ -14,10 +11,13 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 public class Formulaire {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TypeFormulaire typeFormulaire;
 
     @Column(nullable = false)
     private String date;
@@ -37,34 +37,32 @@ public class Formulaire {
     @Column(nullable = false)
     private String numero;
 
-    @Column(nullable = false)
     private String pays;
 
-    @Column(nullable = false)
     private String adresse;
 
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private NiveauLangue niveauLangueActuel;
 
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private NiveauLangue niveauLangueInscription;
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private NiveauInformatique niveauInformatique;
+
+    private String dateDebutCoursInfo;
+
+    private String domaineInfoSouhaiter;
+
     @Enumerated(EnumType.STRING)
     private NiveauEtude niveauEtude;
 
-    @Column(nullable = false)
     private String specialite;
 
-    @Column(nullable = false)
     private String dateHautDiplom;
 
-    @Column(nullable = false)
     private String raisonInscription;
 
-    @Column(nullable = false)
     private String dateDebutCours;
 
     private String infoRecommandataire;

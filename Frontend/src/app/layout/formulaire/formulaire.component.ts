@@ -34,16 +34,16 @@ export class FormulaireComponent  implements OnInit{
   } 
 
   selectedValue: string = "Cours d'allemand (en ligne/présentiel)";
-  choixFormulaire: string = this.selectedValue;
+  nameFormulaire: string = TypeFormulaire['coursLangue'].name;
   blockFormulaire: boolean = true;
   tableauPresence: boolean = false;
-  tableauPresence1: boolean = false;
-  tableauPresence2: boolean = false;
   infoPersoFieldsets: boolean = true;
   niveauLangueFieldsets: boolean = true;
   niveauEtudeFieldsets: boolean = true;
   infoSuplFieldsets: boolean = true;
   competenceInfoFieldsets: boolean = false;
+
+  isSubmitted: boolean = false; 
 
   Sexe: SexeOption[] = [];
   NiveauLangue: NiveauInformatiqueOption[] = [];
@@ -74,29 +74,27 @@ export class FormulaireComponent  implements OnInit{
     nom: new FormControl('', [trimValidator, Validators.required]),
     prenom: new FormControl('', [trimValidator, Validators.required]),
     date: new FormControl('', [Validators.required]),
-    sexe: new FormControl<SexeOption | null>(null),
+    sexe: new FormControl<SexeOption | null>(null, [Validators.required]),
     email: new FormControl('', [trimValidator, Validators.required, Validators.email ]),
     numero: new FormControl('', [trimValidator, Validators.required]),
-    pays: new FormControl('', [Validators.required]),
+    pays: new FormControl<PaysOption | null>(null, [Validators.required]),
     adresse: new FormControl('', [trimValidator, Validators.required]),
+    raisonInscription: new FormControl<RaisonInscriptionOption | null>(null),
+    dateDebutCours: new FormControl(''),
     niveauLangueActuel: new FormControl<NiveauLangueOption | null>(null),
     niveauLangueInscription: new FormControl<NiveauLangueOption | null>(null),
+    niveauInformatique: new FormControl<NiveauInformatiqueOption | null>(null),
+    dateDebutCoursInfo: new FormControl(''),
+    domaineInfoSouhaiter: new FormControl(''),
     niveauEtude: new FormControl<NiveauEtudeOption | null>(null),
-    specialite: new FormControl('', [trimValidator, Validators.required]),
-    specialitee: new FormControl('', [trimValidator, Validators.required]),
-    dateHautDiplom: new FormControl('', [Validators.required]),
-    dateHautDiplome: new FormControl('', [Validators.required]),
-    raisonInscription: new FormControl<RaisonInscriptionOption | null>(null),
-    dateDebutCours: new FormControl('', [Validators.required]),
+    dateHautDiplom: new FormControl(''),
+    specialite: new FormControl(''),
     infoRecommandataire: new FormControl(''),  
-    messageSupplementaire: new FormControl(''),
-    niveauInformatique: new FormControl(trimValidator, [Validators.required]),
-    dateDebutCoursInfo: new FormControl(trimValidator, [Validators.required]),
-    niveauInformatiquee: new FormControl<NiveauInformatiqueOption | null>(null),
-    domaineInfoSouhaiter: new FormControl('', [Validators.required]),
+    messageSupplementaire: new FormControl('')
   });
 
   onSubmit(event: Event): void {
+    event.preventDefault();
     if(!this.loginForm.valid){
       this.loginForm.markAllAsTouched();
       this.messageService.add(
@@ -106,51 +104,63 @@ export class FormulaireComponent  implements OnInit{
           detail: this.validatorService.getFormValidationErrors(this.loginForm)
         });
     }else{
-      this.confirmationService.confirm({
-        target: event.target as EventTarget,
-        message: 'Êtes-vous sûr de vouloir enregistrer cet étudiant ?',
-        header: 'Confirmation',
-        icon: 'pi pi-exclamation-triangle',
-        acceptIcon:"none",
-        rejectIcon:"none",
-        rejectButtonStyleClass:"p-button-text",
-        acceptLabel: "Oui",
-        rejectLabel: "Non",
-        accept: () => {
-          this.saveEtudiant();
-          this.messageService.add({ severity: 'info', summary: 'Confirmé', detail: 'étudiant inscrit avec succès' });
-        },
-        reject: () => {
-            this.messageService.add({ severity: 'error', summary: 'Rejeté', detail: 'Vous avez rejeté', life: 3000 });
-        }
-    });
+      this.isSubmitted = true;
+      this.loginForm.disable();
+      this.messageService.add({ severity: 'info', summary: 'Verification', detail: "Veuillez vérifier à nouveau le formulaire avant de l'enregistrer."});
     }
   } 
 
-  saveEtudiant(): void{
-    this.formulaireService.createEtudiant({...this.loginForm.value})
+  onEdit() {
+    this.loginForm.enable();
+  }
+
+  onSave() {
+    this.isSubmitted = false;
+    this.loginForm.enable();
+    this.saveFormulaire();
+  }
+
+  cancel() {
+    this.isSubmitted = false;
+    this.loginForm.enable();
+    this.loginForm.reset();
+  }
+
+  saveFormulaire(): void{
+    const formulaireData = {
+      typeFormulaire: this.nameFormulaire,
+      ...this.loginForm.value
+    };
+    this.formulaireService.createFormulaire(formulaireData)
     .pipe(take(1)).subscribe({
-      next:(): void =>{
+      next: response=>{
+        this.messageService.add({ severity: 'success', summary: 'success', detail: ' formulaire créé avec success'});
         this.loginForm.reset();
       },
       error: (): void=> {
-        this.messageService.add({severity: 'error', summary: 'Create Employee error', detail: 'Create Employee error'});
+        this.messageService.add({severity: 'error', summary: 'Erreur', detail: 'Erreur lors de la création du formulaire '});
       }
     })
   }
 
   onTypeFormulaire(event: any): void {
     this.selectedValue = event.value;
+    const selectedFormValue = Object.values(TypeFormulaire).find(
+      (form) => form.value === this.selectedValue 
+    );
+    if (selectedFormValue) {
+      this.nameFormulaire = selectedFormValue.name;
+    }
+    
     if(this.selectedValue){
-      this.choixFormulaire = this.selectedValue;
       switch(this.selectedValue){
         case "Formulaire de Présence":
           this.blockFormulaire = false;
-          this.tableauPresence1 = true;
+          this.tableauPresence = true;
           break
         case "Cours d'allemand (en ligne/présentiel)":
         case "Cours d'anglais (en ligne/présentiel)":
-          this.tableauPresence1 = false;
+          this.tableauPresence = false;
           this.blockFormulaire = true;
           this.infoPersoFieldsets = true;
           this.competenceInfoFieldsets = false;
@@ -162,7 +172,7 @@ export class FormulaireComponent  implements OnInit{
         case "Cours d'informatique (en ligne/présentiel)":
         case "Aide à l'obtention d'un visa pour le Canada":
         case "Aide à l'obtention d'un visa pour l'Allemagne":
-          this.tableauPresence1 = false;
+          this.tableauPresence = false;
           this.blockFormulaire = true;
           this.infoPersoFieldsets = true;
           this.competenceInfoFieldsets = false;
@@ -171,7 +181,7 @@ export class FormulaireComponent  implements OnInit{
           this.infoSuplFieldsets = true;
           break;
         case "Cours d'informatique":
-          this.tableauPresence1 = false;
+          this.tableauPresence = false;
           this.blockFormulaire = true;
           this.infoPersoFieldsets = true;
           this.competenceInfoFieldsets = true;
@@ -180,7 +190,7 @@ export class FormulaireComponent  implements OnInit{
           this.infoSuplFieldsets = true;
           break;
         default:
-          this.tableauPresence1 = false;
+          this.tableauPresence = false;
           this.blockFormulaire = true;
           this.infoPersoFieldsets = true;
           this.competenceInfoFieldsets = false;
@@ -194,9 +204,7 @@ export class FormulaireComponent  implements OnInit{
   private gettAllListPresence () {
     this.listPresenceService.getAllListPresence().subscribe(res=>{
       this.listeDePresence = res;
-      console.log(this.listeDePresence);
     })
-    console.log("test");
   }
 
   public udpdatePresence(presence: ListePresenceReponse){
@@ -205,16 +213,13 @@ export class FormulaireComponent  implements OnInit{
   }
 
   public deleteOnePresence(index: number, id: string):void {
-    console.log(id);
     this.listPresenceService.deleteOnePresence(id).subscribe({
       next: () => {
         this.listeDePresence.splice(index, 1);
         this.messageService.add({ severity: 'info', summary: 'Supprimer', detail: 'présence supprimée avec succès' });
-        console.log(`présence avec pour ID ${id} supprimée avec succès.`);
       },
       error: (error) => {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Erreur suprimant la présence' });
-        console.error('Erreur suprimant la présence', error);
       }
     }); 
   }
@@ -264,7 +269,6 @@ export class FormulaireComponent  implements OnInit{
       },
       error: (error) => {
           this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Impossible d\'ajouter la présence' });
-          console.error('Erreur lors de l\'ajout de la présence', error);
       }
      });
   }
